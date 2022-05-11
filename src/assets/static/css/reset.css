@@ -1,0 +1,25 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html,
+body,
+div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+
+/* custom */
+a {
+  color: #7e8c8d;
+  text-decoration: none;
+}
+
+html,
+body {
+  width: 100%;
+}

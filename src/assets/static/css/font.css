@@ -1,0 +1,8 @@
+@font-face {
+  /*给字体命名*/
+  font-family: 'lato-light';
+  /*引入字体文件*/
+  src: url('../font/lato-light.woff');
+  font-weight: normal;
+  font-style: normal;
+}
