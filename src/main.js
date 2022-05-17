@@ -7,6 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
+import axios from 'axios'
+
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 

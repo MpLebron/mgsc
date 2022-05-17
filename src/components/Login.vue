@@ -9,14 +9,15 @@
           <span class="lable-p">
             <label class="control-label">Account :</label>
             <div>
-              <input id="loginAccount" type="text" class="form-control" placeholder="Please enter your email address or username!" />
+              <input id="loginAccount" ref="loginAccount" type="text" class="form-control" placeholder="Please enter your email address or username!" />
             </div>
             <label class="control-label" id="pass">Password :</label>
             <div>
-              <input id="loginPassword" type="password" class="form-control" placeholder="Please enter your password" />
+              <input id="loginPassword" ref="loginPassword" type="password" class="form-control" placeholder="Please enter your password" />
             </div>
           </span>
-          <el-button round style="margin-top:30px">Login</el-button>
+          <el-button round style="margin-top:30px" @click="loginSubmit">Login</el-button>
+
         </div>
 
         <div class="col-md-2"></div>
@@ -28,6 +29,7 @@
           </p>
           <p style="margin-left:15px">2.Forget your password ?
             <a type="button" data-toggle="modal" data-target="#myModal" id="resetPassword" style="font-weight: bold;cursor: pointer" @click="dialogFormVisible2 = true">Click here.</a>
+          </p>
           <p style="margin-left:15px">3.Please be noted that the web account is NOT commission member.&nbsp;Please go to "Join us" to apply for the membership.
           </p>
         </div>
@@ -38,19 +40,19 @@
     <el-dialog title="Register" width="40%" :visible.sync="dialogFormVisible" @close="dialogFormClosed()">
       <el-form :model="dialogForm" :rules="dialogFormRule" ref="dialogForm">
         <el-form-item label="Name:" prop="Name">
-          <el-input v-model="dialogForm.Name"></el-input>
+          <el-input v-model="dialogForm.Name" ref="regName"></el-input>
         </el-form-item>
         <el-form-item label="Email:" prop="Email">
-          <el-input v-model="dialogForm.Email"></el-input>
+          <el-input v-model="dialogForm.Email" ref="regEmail"></el-input>
         </el-form-item>
         <el-form-item label="Password:" prop="Password">
-          <el-input v-model="dialogForm.Password"></el-input>
+          <el-input v-model="dialogForm.Password" ref="regNPassword"></el-input>
         </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="registerConfirm">Confirm</el-button>
+        <el-button type="primary" @click="registerSubmit">Confirm</el-button>
       </div>
 
     </el-dialog>
@@ -59,18 +61,18 @@
     <el-dialog title="Reset Password" width="40%" :visible.sync="dialogFormVisible2" @close="dialogForm2Closed()">
       <el-form :model="dialogForm2" :rules="dialogForm2Rule" ref="dialogForm2">
         <el-form-item label="Email:" prop="Email">
-          <el-input v-model="dialogForm2.Email"></el-input>
+          <el-input v-model="dialogForm2.Email" ref="resetEmail"></el-input>
         </el-form-item>
         <el-form-item label="Verfication Code:" prop="VCcode">
-          <el-input v-model="dialogForm2.VCcode"></el-input>
+          <el-input v-model="dialogForm2.VCcode" ref="resetVCcode"></el-input>
         </el-form-item>
         <el-form-item label="New Password:" prop="newPassword">
-          <el-input v-model="dialogForm2.newPassword"></el-input>
+          <el-input v-model="dialogForm2.newPassword" ref="resetNewPassword"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible2 = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible2 = false">Confirm</el-button>
+        <el-button type="primary" @click="resetSubmit">Confirm</el-button>
       </div>
     </el-dialog>
   </div>
@@ -86,7 +88,7 @@ export default {
       // 注册用户对话框数据项
       dialogForm: {
         Name: '',
-        Emial: '',
+        Email: '',
         Password: ''
       },
 
@@ -123,8 +125,63 @@ export default {
       this.$refs.dialogForm2.resetFields()
     },
 
-    registerConfirm() {
+    loginSubmit() {
+      let Account = this.$refs.loginAccount.value
+      let Password = this.$refs.loginPassword.value
+
+      if ((Account === '') | (Password === '')) {
+        this.loginOpen()
+        return
+      }
+
+      let datalogin = {
+        userAccount: Account,
+        userPassword: Password
+      }
+
+      this.$http.post('api/mgsc/user/login', datalogin).then(res => {
+        console.log(datalogin)
+        console.log(res)
+      })
+    },
+
+    loginOpen() {
+      this.$alert('Please input your Account and Password！', 'Warning', {
+        confirmButtonText: 'OK',
+        type: 'warning'
+      })
+    },
+
+    registerSubmit() {
+      let Name = this.$refs.regName.value
+      let Email = this.$refs.regEmail.value
+      let Password = this.$refs.regPassword.value
+
+      // 如果有一项为空，则返回
+      if ((Name === '') | (Email === '') | (Password === '')) {
+        return
+      }
+
+      // 如果用户输入符合要求，则发送请求
+
+      // 发送请求成功后，关闭输入框
       this.dialogFormVisible = false
+    },
+
+    resetSubmit() {
+      let Email = this.$refs.resetEmail.value
+      let VCcode = this.$refs.resetVCcode.value
+      let newPassword = this.$refs.resetNewPassword.value
+
+      // 如果有一项为空，则返回
+      if ((Email === '') | (VCcode === '') | (newPassword === '')) {
+        return
+      }
+
+      // 如果用户输入符合要求，则发送请求
+
+      // 发送请求成功后，关闭输入框
+      this.dialogFormVisible2 = false
     }
   }
 }
