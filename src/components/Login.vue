@@ -129,14 +129,15 @@ export default {
       // 添加注册表单的验证规则对象
       dialogFormRule: {
         Name: [{ required: true, message: 'Please input your Name!', trigger: 'blur' }],
-        Email: [{ validator: checkEmail, trigger: 'blur' }],
-        Password: [{ validator: checkPassword, trigger: 'blur' }]
+        Email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
+        Password: [{ required: true, validator: checkPassword, trigger: 'blur' }]
       },
 
+      // 添加找回密码的验证规则对象
       dialogForm2Rule: {
-        Email: [{ required: true, message: 'Please input your Email!', trigger: 'blur' }],
+        Email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
         VCcode: [{ required: true, message: 'Please input your Verfication Code!', trigger: 'blur' }],
-        newPassword: [{ required: true, message: 'Please input your New Password!', trigger: 'blur' }]
+        newPassword: [{ required: true, validator: checkPassword, trigger: 'blur' }]
       }
     }
   },
@@ -195,8 +196,30 @@ export default {
             confirmButtonText: 'OK',
             type: 'success'
           })
+
+          // 如果登陆成功，则跳转到用户中心
+
+          // 需要判断是普通用户，还是会员用户
+          // // 如果是普通用户，则跳转到用户中心
+          if (!resData.memberId) {
+            this.$store.commit('changeUserInfo', resData)
+            sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+
+            window.location.href = 'UserSpace'
+          } else {
+            const memberData = {
+              memberId: resData.memberId
+            }
+            sessionStorage.setItem('store', JSON.stringify(memberData))
+
+            // 向服务器请求当前memberId所对应的用户的信息
+            this.$http.post('api/in/Space', qs.stringify(memberData))
+
+            window.location.href = 'MemberSpace'
+          }
+
+          // 如果是会员用户,则跳转到会员中心
         }
-        // 如果登陆成功，则跳转到用户中心
       })
     },
 
@@ -208,13 +231,14 @@ export default {
       })
     },
 
+    // 提交注册信息
     registerSubmit() {
       let Name = this.$refs.regName.value
       let Email = this.$refs.regEmail.value
       let Password = this.$refs.regNewPassword.value
 
       // 如果有一项为空，则返回
-      if ((Name === '') | (Email === '') | (Password === '')) {
+      if ((Name === '') | (Email === '') | (Password === '') | !this.isEmail(Email) | !this.isPwdvalidate(Password)) {
         this.$message({
           message: 'Please input the corresponding information!',
           type: 'warning'
@@ -252,6 +276,7 @@ export default {
       })
     },
 
+    // 提交重置密码信息
     resetSubmit() {
       let Email = this.$refs.resetEmail.value
       let VCcode = this.$refs.resetVCcode.value
@@ -304,6 +329,7 @@ export default {
       // this.dialogFormVisible2 = false
     },
 
+    // 判断是否为邮箱格式
     isEmail(str) {
       if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(str)) {
         return false
@@ -312,8 +338,8 @@ export default {
       }
     },
 
+    //判断密码是否符合规则
     isPwdvalidate(str) {
-      //判断密码是否符合规则
       if (/^.*?[\d]+.*$/.test(str) && /^.*?[a-z].*$/.test(str) && str.length > 7) {
         return true
       } else {
@@ -321,6 +347,7 @@ export default {
       }
     },
 
+    // 向用户邮箱发送认证码
     sendCode() {
       let VCEmail = this.$refs.resetEmail.value
 
