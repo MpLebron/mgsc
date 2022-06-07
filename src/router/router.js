@@ -17,10 +17,13 @@ import _2021_4 from '../components/Events/2021/4.vue'
 import _2021_5 from '../components/Events/2021/5.vue'
 import _2021_6 from '../components/Events/2021/6.vue'
 import _2022_1 from '../components/Events/2022/1.vue'
+import UserSpace from '../components/UserSpace.vue'
+import MemberSpace from '../components/MemberSpace.vue'
 
 
 export default [
   { path: "/", component: Home, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
+  { path: "/Home", component: Home, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
   { path: '/AboutUs', component: AboutUs, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
   { path: '/ContactUs', component: ContactUs, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
   { path: '/Awards', component: Awards, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
@@ -38,5 +41,7 @@ export default [
   { path: '/Events/2021/4', component: _2021_4, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
   { path: '/Events/2021/5', component: _2021_5, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
   { path: '/Events/2021/6', component: _2021_6, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
-  { path: '/Events/2022/1', component: _2022_1, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } }
+  { path: '/Events/2022/1', component: _2022_1, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
+  { path: '/UserSpace', component: UserSpace, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } },
+  { path: '/MemberSpace', component: MemberSpace, meta: { title: 'MGSC of IGU- Modeling Geographical Systems Commission International Geographical Union (IGU)' } }
 ]
