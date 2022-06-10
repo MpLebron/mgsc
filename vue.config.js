@@ -20,7 +20,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://www.igu-geomodeling.com/',
+        target: 'http://localhost:8087/',
         pathRewrite: { '^/api': '' },
         changeOrigin: true
       }

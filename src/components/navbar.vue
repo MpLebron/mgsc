@@ -2,70 +2,56 @@
   <div class="top-bar">
     <el-row>
       <el-col :span="24">
-        <el-menu mode="horizontal" background-color="#1a80b6" text-color="#fff" active-text-color="#ffd04b">
-          <el-menu-item index='1'>
-            <router-link to="/">
-              Home
-            </router-link>
+        <el-menu router mode="horizontal" background-color="#1a80b6" text-color="#fff" active-text-color="#ffd04b">
+          <el-menu-item index='/'>
+            Home
           </el-menu-item>
-          <el-menu-item index='2'>
-            <router-link to="/AboutUs">
-              About Us
-            </router-link>
+          <el-menu-item index='/AboutUs'>
+            About Us
           </el-menu-item>
 
-          <el-menu-item index='3'>
-            <router-link to="/Events">
-              Events
-            </router-link>
+          <el-menu-item index='/Events'>
+            Events
           </el-menu-item>
-          <el-menu-item index='4'>
-            <router-link to="/Awards">
-              Awards
-            </router-link>
+          <el-menu-item index='/Awards'>
+            Awards
           </el-menu-item>
           <el-submenu index='5'>
             <template slot="title">Publications</template>
-            <el-menu-item index='5-1'>
-              <router-link to="/Publication/Journals">
-                Journals
-              </router-link>
+            <el-menu-item index='/Publication/Journals'>
+              Journals
             </el-menu-item>
 
-            <el-menu-item index='5-2'>
-              <router-link to="/Publication/SpecialIssues">
-                Special Issues
-              </router-link>
+            <el-menu-item index='/Publication/SpecialIssues'>
+              Special Issues
             </el-menu-item>
 
-            <el-menu-item index='5-3'>
-              <router-link to="/Publication/MembersPapers">
-                Members' Papers
-              </router-link>
+            <el-menu-item index='/Publication/MembersPapers'>
+              Members' Papers
             </el-menu-item>
           </el-submenu>
-          <el-menu-item index='6'>
-            <router-link to="/JobsOpportunities">
-              Jobs & Opportunities
-            </router-link>
+          <el-menu-item index='/JobsOpportunities'>
+            Jobs & Opportunities
           </el-menu-item>
 
-          <el-menu-item index='7'>
-            <router-link to="/JoinUs">
-              Join Us
-            </router-link>
+          <el-menu-item index='/JoinUs'>
+            Join Us
           </el-menu-item>
 
-          <el-menu-item index='8'>
-            <router-link to="/ContactUs">
-              Contact Us
-            </router-link>
+          <el-menu-item index='/ContactUs'>
+            Contact Us
           </el-menu-item>
 
-          <el-menu-item index='9'>
-            <router-link to="/Login">
-              Login
-            </router-link>
+          <el-menu-item v-if="login" index='/Login'>
+            Login
+          </el-menu-item>
+
+          <el-menu-item v-if="userSpace" index='/userSpace'>
+            User Space
+          </el-menu-item>
+
+          <el-menu-item v-if="memberSpace" index='/memberSpace'>
+            Member Space
           </el-menu-item>
 
           <template #right>
@@ -81,7 +67,31 @@
 export default {
   name: 'TopBar',
   data() {
-    return {}
+    return {
+      memberSpace: false,
+      userSpace: false,
+      login: false
+    }
+  },
+
+  methods: {
+    navInit() {
+      if (!sessionStorage.getItem('store') && !sessionStorage.getItem('memberInfo')) {
+        this.login = true
+      }
+
+      if (sessionStorage.getItem('store')) {
+        this.userSpace = true
+      }
+
+      if (sessionStorage.getItem('memberInfo')) {
+        this.memberSpace = true
+      }
+    }
+  },
+
+  created() {
+    this.navInit()
   }
 }
 </script>

@@ -14,7 +14,7 @@
               Name:
             </div>
             <div class="col-md-6">
-              <p id="spacename" th:text="${session.memberName}"></p>
+              {{this.memberInfo.memberName}}
             </div>
           </div>
 
@@ -23,7 +23,7 @@
               Email:
             </div>
             <div class="col-md-6">
-              <p th:text="${session.memberEmail}"></p>
+              {{this.memberInfo.memberEmail}}
             </div>
           </div>
 
@@ -32,7 +32,7 @@
               Member register time:
             </div>
             <div class="col-md-6">
-              <p th:text="${session.registerTime}"></p>
+              {{this.memberInfo.memberRegisterTime}}
             </div>
           </div>
 
@@ -41,7 +41,7 @@
               Member expiration time:
             </div>
             <div class="col-md-6">
-              <p th:text="${session.dueTime}"></p>
+              {{this.memberInfo.memberDueTime}}
             </div>
           </div>
 
@@ -50,7 +50,7 @@
               Is over expiration time:
             </div>
             <div class="col-md-6">
-              <p th:text="${session.isDue}"></p>
+              {{this.memberInfo.memberIsDue}}
             </div>
           </div>
         </div>
@@ -83,35 +83,40 @@ export default {
   name: 'MemberSpace',
   data() {
     return {
-      memberName: '',
-      memberEmail: '',
-      memberRegisterTime: '',
-      memberExpirationTime: '',
-      memberIsOverExpirationTime: ''
+      memberInfo: ''
     }
   },
   methods: {
-    Renew() {},
+    Renew() {
+      const memberId = this.memberInfo.memberId
+      console.log(memberId)
+
+      const memberIdData = {
+        memberId: memberId
+      }
+      this.$http.post('api/mgsc/member/renew', qs.stringify(memberIdData)).then(res => {
+        const { data: resData } = res
+        this.$alert(resData, 'Message', {
+          confirmButtonText: 'OK',
+          type: 'info'
+        })
+      })
+    },
 
     logOut() {
       this.$http.post('api/mgsc/logout').then(function () {
         sessionStorage.clear()
         window.location.href = 'Home'
       })
-    }
+    },
 
-    // memberInit() {
-    //   const memberId = JSON.parse(sessionStorage.getItem('store')).memberId
-    //   const memberIdData = {
-    //     memberId: memberId
-    //   }
-    //   // 向服务器请求当前memberId所对应的用户的信息
-    //   this.$http.post('api/in/Space', qs.stringify(memberIdData))
-    // }
+    memberInit() {
+      this.memberInfo = JSON.parse(sessionStorage.getItem('memberInfo'))
+    }
   },
 
-  mounted() {
-    // this.memberInit()
+  created() {
+    this.memberInit()
   }
 }
 </script>
