@@ -62,12 +62,10 @@
         </div><br>
         <div class="form-group">
           <label for="Cmessage">Message</label>
-          <textarea type="text" class="form-control" id="Cmessage" placeholder="Message"></textarea>
+          <textarea type="text" class="form-control" id="CMessage" placeholder="Message"></textarea>
         </div>
         <br>
-        <button type="submit" id="contactusemail" class="btn
-                                                  btn-primary
-                                                                  blue-bg">Submit</button>
+        <button type="submit" id="contactusemail" class="btn btn-primary blue-bg" @click="contactUs">Submit</button>
         <br>
         <p id="successfulcontactus"></p>
       </div>
@@ -80,6 +78,69 @@ export default {
   name: 'ContactUs',
   data() {
     return {}
+  },
+  methods: {
+    contactUs() {
+      var c_name = document.getElementById('CName').value
+      var c_email = document.getElementById('CEmail').value
+      var c_message = document.getElementById('CMessage').value
+
+      // 如果字段为空，则提醒用户补充字段
+      if ((c_email === '') | (c_message === '') | (c_name === '')) {
+        this.$notify({
+          title: 'Message',
+          message: 'Please enter related information!',
+          type: 'warning'
+        })
+        // 如果邮箱验证成功，则发送邮件
+      } else if (this.isEmail(c_email)) {
+        // to Zaiyang Ma
+        this.$http.post(
+          'https://formspree.io/f/mrgrprpw',
+          {
+            From: 'igu-geomodeling.com',
+            Name: c_name,
+            Email: c_email,
+            Message: c_message
+          },
+          function () {
+            //
+          }
+        )
+
+        // To Xintao Liu
+        this.$http.post(
+          'https://formspree.io/f/xdopdyoa',
+          {
+            From: 'igu-geomodeling.com',
+            Name: c_name,
+            Email: c_email,
+            Message: c_message
+          },
+          function () {}
+        )
+        this.$notify({
+          title: 'Suceess',
+          message: 'Sucessfully submitted, Please wait and we will get back to you！',
+          type: 'success'
+        })
+        // 如果邮箱验证失败，则提醒用户输入正确格式的邮箱
+      } else {
+        this.$notify({
+          title: 'Message',
+          message: 'Please enter a valid email!',
+          type: 'warning'
+        })
+      }
+    },
+
+    isEmail(str) {
+      if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(str)) {
+        return false
+      } else {
+        return true
+      }
+    }
   }
 }
 </script>

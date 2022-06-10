@@ -210,15 +210,35 @@ export default {
             const memberData = {
               memberId: resData.memberId
             }
-            sessionStorage.setItem('store', JSON.stringify(memberData))
 
             // 向服务器请求当前memberId所对应的用户的信息
-            this.$http.post('api/in/Space', qs.stringify(memberData))
+            this.$http
+              .post('api/mgsc/in/Space', qs.stringify(memberData))
+              .then(res => {
+                const { data: resData } = res
+                const memberId = resData[0]
+                const memberName = resData[1]
+                const memberEmail = resData[2]
+                const memberRegisterTime = resData[3]
+                const memberDueTime = resData[4]
+                const memberIsDue = resData[5]
 
-            window.location.href = 'MemberSpace'
+                let memberInfo = {
+                  memberId: memberId,
+                  memberName: memberName,
+                  memberEmail: memberEmail,
+                  memberRegisterTime: memberRegisterTime,
+                  memberDueTime: memberDueTime,
+                  memberIsDue: memberIsDue
+                }
+
+                sessionStorage.setItem('memberInfo', JSON.stringify(memberInfo))
+              })
+              .then(() => {
+                // 如果是会员用户,则跳转到会员中心
+                window.location.href = 'MemberSpace'
+              })
           }
-
-          // 如果是会员用户,则跳转到会员中心
         }
       })
     },

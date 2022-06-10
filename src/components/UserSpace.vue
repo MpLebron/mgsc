@@ -47,7 +47,7 @@
           <el-input v-model="input" placeholder="Please input your memberID!" style="margin-top:15px" ref="memberIDRef"></el-input>
           <el-button type="primary" plain @click="Submit" style="margin-left: 30px">Submit</el-button>
           <p>
-            Tip: Click <a href="../assets/static/doc/MGSC Membership application form.docx " style="cursor: pointer">here</a> to apply for membership.
+            Tip: Click <a href="https://github.com/MpLebron/mgsc/blob/master/src/assets/static/doc/MGSC%20Membership%20application%20form.docx?raw=true" style="cursor: pointer">here</a> to apply for membership.
           </p>
           <el-button type="primary" plain @click="logOut">Log out</el-button>
         </div>

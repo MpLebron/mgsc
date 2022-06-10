@@ -47,13 +47,13 @@
       <hr style="border-bottom:3px double grey;">
 
       <div>
-        <strong class="home-h"><a href="../assets/static/doc/International-Geography-and-Sustainability-Workshop-2021.pdf" target="_blank">The 2nd International Geography and Sustainability Workshop (online)</a><br></strong>
+        <strong class="home-h"><a href="https://github.com/MpLebron/mgsc/raw/master/src/assets/static/doc/International-Geography-and-Sustainability-Workshop-2021.pdf" target="_blank">The 2nd International Geography and Sustainability Workshop (online)</a><br></strong>
         <small class="home-date">Nov 23th-24th, 2021<br></small>
         <p>The 2021 International Geography and Sustainability Workshop (online) will be held from November 23 to 24. This workshop brings together researchers around the world, in collaboration with IGU commissions, to identify common challenges and discuss solutions to promote sustainable development through an integrated geographic perspective. It will present the latest research progress on geography and sustainability and is expected to provide a valuable contribution to transforming our world for sustainable development. Specific objectives are: to identify critical research areas on geography and sustainability; and present the geographical case studies on transforming our world for sustainable development.<br></p>
         <strong>
           <p>Welcome to join us!</p>
         </strong>
-        <p>The abstract follows: <a href="../assets/static/doc/doc/International-Geography-and-Sustainability-Workshop-2021.pdf" target="_blank">(more…)</a></p>
+        <p>The abstract follows: <a href="https://github.com/MpLebron/mgsc/raw/master/src/assets/static/doc/International-Geography-and-Sustainability-Workshop-2021.pdf" target="_blank">(more…)</a></p>
       </div>
 
       <hr style="border-bottom:3px double grey;">
